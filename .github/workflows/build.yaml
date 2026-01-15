@@ -14,46 +14,20 @@ permissions:
 
 jobs:
   build:
-    name: Build for ${{ matrix.os }}
+    name: Build macOS binaries
     runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
-          - os: linux
-            arch: amd64
-            goos: linux
-            goarch: amd64
-            output: file-organizer-linux-amd64
-
-          - os: linux
-            arch: arm64
-            goos: linux
-            goarch: arm64
-            output: file-organizer-linux-arm64
-
-          - os: macos
-            arch: amd64
+          - arch: amd64
             goos: darwin
             goarch: amd64
-            output: file-organizer-macos-amd64
+            output: prefix-macos-amd64
 
-          - os: macos
-            arch: arm64
+          - arch: arm64
             goos: darwin
             goarch: arm64
-            output: file-organizer-macos-arm64
-
-          - os: windows
-            arch: amd64
-            goos: windows
-            goarch: amd64
-            output: file-organizer-windows-amd64.exe
-
-          - os: windows
-            arch: arm64
-            goos: windows
-            goarch: arm64
-            output: file-organizer-windows-arm64.exe
+            output: prefix-macos-arm64
 
     steps:
       - name: Checkout code

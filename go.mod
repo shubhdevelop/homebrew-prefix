@@ -1,4 +1,4 @@
-module file-organizer
+module prefix
 
 go 1.21
 

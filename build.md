@@ -1,17 +1,15 @@
 # GitHub Actions Workflow
 
-This project includes a GitHub Actions workflow to automatically build executables for multiple platforms using a matrix build strategy.
+This project includes a GitHub Actions workflow to automatically build macOS executables using a matrix build strategy.
 
-## Workflow: `build.yml`
+## Workflow: `build.yaml`
 
-Uses a build matrix for clean, maintainable configuration.
+Uses a build matrix to build for both macOS architectures.
 
 ## Supported Platforms
 
-Both workflows build for:
-- **Linux**: amd64, arm64
-- **macOS**: amd64 (Intel), arm64 (Apple Silicon/M1/M2)
-- **Windows**: amd64, arm64
+The workflow builds for:
+- **macOS**: amd64 (Intel), arm64 (Apple Silicon/M1/M2/M3)
 
 ## Triggers
 
@@ -39,7 +37,7 @@ The workflows run on:
    ```
 
 2. GitHub Actions will:
-   - Build all platform binaries
+   - Build macOS binaries (Intel and Apple Silicon)
    - Generate SHA256 checksums
    - Create a GitHub Release
    - Attach all binaries and checksums to the release
@@ -70,20 +68,19 @@ The builds use these optimizations:
 
 Binaries are named as:
 ```
-file-organizer-{os}-{arch}[.exe]
+prefix-macos-{arch}
 ```
 
 Examples:
-- `file-organizer-linux-amd64`
-- `file-organizer-macos-arm64`
-- `file-organizer-windows-amd64.exe`
+- `prefix-macos-amd64` (Intel Macs)
+- `prefix-macos-arm64` (Apple Silicon: M1, M2, M3)
 
 ## Requirements
 
-No setup needed! The workflows:
+No setup needed! The workflow:
 - Set up Go automatically
 - Download dependencies
-- Build for all platforms
+- Build for both macOS architectures
 - Upload artifacts
 
 ## Permissions
@@ -92,15 +89,14 @@ The workflow requires `contents: write` permission to create releases. This is a
 
 ## Customization
 
-### Adding a New Platform
+### Adding More Platforms
 
-Add to the matrix in `build.yml`:
+To add Linux or Windows builds, add to the matrix in `build.yaml`:
 ```yaml
-- os: freebsd
-  arch: amd64
-  goos: freebsd
+- arch: amd64
+  goos: linux
   goarch: amd64
-  output: file-organizer-freebsd-amd64
+  output: prefix-linux-amd64
 ```
 
 ### Changing Go Version
